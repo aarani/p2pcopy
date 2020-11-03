@@ -38,6 +38,9 @@
     <Reference Include="udtsharp">
       <HintPath>packages\UdtSharp.0.1.0--date20201004-0708.git-86da089\lib\netstandard2.0\udtsharp.dll</HintPath>
     </Reference>
+    <Reference Include="STUN">
+      <HintPath>packages\STUN.0.5.1--date20201103-1058.git-bcc9ee7\lib\net45\STUN.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleProgress.cs" />
@@ -47,7 +50,6 @@
     <Compile Include="Receiver.cs" />
     <Compile Include="Sender.cs" />
     <Compile Include="SizeConverter.cs" />
-    <Compile Include="StunClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
