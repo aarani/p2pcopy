@@ -34,12 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="udtsharp">
-      <HintPath>packages\UdtSharp.0.1.0--date20201004-0708.git-86da089\lib\netstandard2.0\udtsharp.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="ConsoleProgress.cs" />
     <Compile Include="InternetTime.cs" />
     <Compile Include="Program.cs" />
@@ -47,15 +41,20 @@
     <Compile Include="Receiver.cs" />
     <Compile Include="Sender.cs" />
     <Compile Include="SizeConverter.cs" />
-    <Compile Include="StunClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="STUN">
+      <Version>0.5.1--date20201103-1050.git-e50715f</Version>
+    </PackageReference>
+    <PackageReference Include="UdtSharp">
+      <Version>0.1.0--date20201004-0708.git-86da089</Version>
+    </PackageReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

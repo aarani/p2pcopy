@@ -3,6 +3,8 @@ using System.Net.Sockets;
 using System.Collections.Generic;
 using System.Net;
 using UdtSharp;
+using STUN;
+using STUN.Attributes;
 
 namespace p2pcopy
 {
@@ -439,19 +441,22 @@ namespace p2pcopy
                 string host = server.Item1;
                 int port = server.Item2;
 
-                StunResult externalEndPoint = StunClient.Query(host, port, socket);
+                if (!STUNUtils.TryParseHostAndPort($"{host}:{port}", out IPEndPoint stunEndPoint))
+                    continue;
 
-                if (externalEndPoint.NetType == StunNetType.UdpBlocked)
+                STUNQueryResult stunResult = STUNClient.Query(socket, stunEndPoint, STUNQueryType.ExactNAT, NATTypeDetectionRFC.Rfc3489);
+
+                if (stunResult.QueryError != STUNQueryError.Success)
                 {
                     continue;
                 }
 
-                Console.WriteLine("Your firewall is {0}", externalEndPoint.NetType.ToString());
+                Console.WriteLine("Your firewall is {0}", stunResult.NATType);
 
                 return new P2pEndPoint()
                 {
-                    External = externalEndPoint.PublicEndPoint,
-                    Internal = (socket.LocalEndPoint as IPEndPoint)
+                    External = stunResult.PublicEndPoint,
+                    Internal = socket.LocalEndPoint as IPEndPoint
                 };
             }
 
