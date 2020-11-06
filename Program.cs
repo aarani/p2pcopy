@@ -165,6 +165,8 @@ namespace p2pcopy
 
         static P2pEndPoint GetExternalEndPoint(Socket socket)
         {
+            List<string> responses = new List<string>();
+
             // https://gist.github.com/zziuni/3741933
 
             List<Tuple<string, int>> stunServers = new List<Tuple<string, int>>();
@@ -451,13 +453,22 @@ namespace p2pcopy
                     continue;
                 }
 
-                Console.WriteLine("Your firewall is {0}", stunResult.NATType);
-
-                return new P2pEndPoint()
+                var newEndpoint = new P2pEndPoint()
                 {
                     External = stunResult.PublicEndPoint,
                     Internal = (socket.LocalEndPoint as IPEndPoint)
                 };
+
+                if (responses.Contains(newEndpoint.External.ToString()))
+                {
+                    Console.WriteLine("Your firewall is {0}", stunResult.NATType);
+                    return newEndpoint;
+                }
+                else
+                {
+                    responses.Add(newEndpoint.External.ToString());
+                    continue;
+                }   
             }
 
             Console.WriteLine("Could not find a working STUN server");
