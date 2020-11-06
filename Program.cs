@@ -446,7 +446,7 @@ namespace p2pcopy
                 if (!STUNUtils.TryParseHostAndPort($"{host}:{port}", out IPEndPoint stunEndPoint))
                     continue;
 
-                STUNQueryResult stunResult = STUNClient.Query(socket, stunEndPoint, STUNQueryType.ExactNAT, NATTypeDetectionRFC.Rfc3489);
+                STUNQueryResult stunResult = STUNClient.Query(socket, stunEndPoint, STUNQueryType.ExactNAT, NATTypeDetectionRFC.Rfc5780);
 
                 if (stunResult.QueryError != STUNQueryError.Success)
                 {
