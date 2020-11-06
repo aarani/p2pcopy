@@ -165,7 +165,7 @@ namespace p2pcopy
 
         static P2pEndPoint GetExternalEndPoint(Socket socket)
         {
-            List<string> responses = new List<string>();
+            var responses = new List<IPEndPoint>();
 
             // https://gist.github.com/zziuni/3741933
 
@@ -459,14 +459,14 @@ namespace p2pcopy
                     Internal = (socket.LocalEndPoint as IPEndPoint)
                 };
 
-                if (responses.Contains(newEndpoint.External.ToString()))
+                if (responses.Contains(newEndpoint.External))
                 {
                     Console.WriteLine("Your firewall is {0}", stunResult.NATType);
                     return newEndpoint;
                 }
                 else
                 {
-                    responses.Add(newEndpoint.External.ToString());
+                    responses.Add(newEndpoint.External);
                     continue;
                 }   
             }
